@@ -8,7 +8,8 @@ import tensorflow as tf
 
 class Siamese(object):
     _defaults = {
-        "model_path": 'logs/ep048-loss0.369-val_loss0.394.h5',
+        #"model_path": 'logs/ep048-loss0.369-val_loss0.394.h5',# 预测时加载的权重路径
+        "model_path": '/work/home/succuba/OBIs-Evolution-of-Chinese-characters/model_data/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5',
         "input_shape" : (105, 105, 3),
     }
 
@@ -31,7 +32,7 @@ class Siamese(object):
         assert model_path.endswith('.h5'), 'Keras model or weights must be a .h5 file.'
         
         self.model = siamese(self.input_shape)
-        self.model.load_weights(self.model_path)
+        self.model.load_weights(self.model_path,by_name=True,skip_mismatch=True)#加两个参数
     
         self.model.summary()
         print('{} model, anchors, and classes loaded.'.format(model_path))

@@ -124,7 +124,7 @@ if __name__ == "__main__":
     #-------------------------------#
     Use_Data_Loader = True
 
-    model_path = 'model_data/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
+    model_path = 'model_data/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'#预训练 backbone 权重文件路径（如 VGG16 的预训练权重）
     model.load_weights(model_path, by_name=True, skip_mismatch=True)
 
     train_ratio = 0.9

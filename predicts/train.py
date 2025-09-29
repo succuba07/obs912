@@ -1,11 +1,18 @@
+import sys
+import os
+# 获取当前文件（yb_pre.py）所在的绝对路径，然后向上回退一级，得到项目根目录
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from nets.siamese import siamese
 from nets.siamese_training import Generator
 from nets.siamese_training_own_dataset import Generator as Generator_own_dataset
 from tensorflow.keras.callbacks import TensorBoard, ReduceLROnPlateau, EarlyStopping
 from tensorflow.keras.optimizers import Adam, SGD
-from utils.utils import ModelCheckpoint
+# from utils.utils import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint
 import tensorflow as tf
 import os
+print("当前工作目录是:", os.getcwd()) # 查看Python从哪里开始解析相对路径
 
 def get_image_num(path, train_own_data):
     num = 0
@@ -39,7 +46,7 @@ if __name__ == "__main__":
     model = siamese(input_shape)
     model.summary()
 
-    model_path = 'model_data/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
+    model_path = 'model_data/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'#预训练 backbone 权重文件路径（如 VGG16 的预训练权重）
     model.load_weights(model_path, by_name=True, skip_mismatch=True)
     # 保存的方式，3世代保存一次
     checkpoint_period = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
